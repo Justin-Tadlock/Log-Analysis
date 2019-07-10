@@ -13,13 +13,13 @@ These instructions will get you a copy of he project up and running on your loca
 ### Prerequisites
 
 To run the VM, you must have the following:
-[VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-[Vagrant](https://www.vagrantup.com/)
+* [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+* [Vagrant](https://www.vagrantup.com/)
 
 For more information on the base setup that this project is running off of, visit the [Udacity VM Setup](https://github.com/udacity/fullstack-nanodegree-vm)
 
 To have the project run, you need to download the import data:
-[Import Data](https://drive.google.com/file/d/1iy8bCofa7JJRINPeFdDQoY7SkEKBnKNx/view?usp=sharing)
+* [Import Data](https://drive.google.com/file/d/1iy8bCofa7JJRINPeFdDQoY7SkEKBnKNx/view?usp=sharing)
 
 ### Running the VM
 
