@@ -4,11 +4,14 @@
 import psycopg2
 import sys
 
-# Query the database using the query string passed in.
-# Returns the query result set if the query is successful,
-#  a null query result set otherwise.
+
 def get_query_result_set(query):
-    query_result_set = None;
+    # This method is used to query the database using
+    #  the query string passed in.
+    # Returns the query result set if the query is successful,
+    #  a null query result set otherwise.
+
+    query_result_set = None
 
     try:
         dbConn = psycopg2.connect('dbname=news')
@@ -20,43 +23,47 @@ def get_query_result_set(query):
 
     if dbConn is not None:
         cursor = dbConn.cursor()
-        cursor.execute(query);
+        cursor.execute(query)
         query_result_set = cursor.fetchall()
         dbConn.close()
 
-    return query_result_set 
+    return query_result_set
 
-# Method for collecting the most popular articles of all time
-# Returns the query results
+
 def get_top_three_articles_all_time():
+    # This method is for collecting the most popular 3 articles of all time
+    # Returns the query results
+
     query = (
         "select "
         "  articles.title, count(log.path) as views "
         "from "
         "  log left join articles "
         "on "
-        "  log.path like '%' || articles.slug || '%' "
+        "  log.path like '%' || articles.slug "
         "where "
         "  articles.title is not null "
         "group by "
         "  articles.title "
         "order by "
-        "  views desc;"
+        "  views desc "
+        "limit 3;"
     )
 
     return get_query_result_set(query)
 
-# Method for collecting the most popular authors of all time
-# Returns the query results
+
 def get_most_popular_authors_all_time():
+    # This method is for collecting the most popular authors of all time
+    # Returns the query results
+
     query = (
         "select "
-        "  authors.name, "
-        "  count(log.path) as views "
+        "  authors.name, count(log.path) as views "
         "from "
         "  authors, "
         "  articles left join log on log.path like '%' || "
-        "  articles.slug || '%' "
+        "  articles.slug "
         "where "
         "  authors.id = articles.author "
         "group by "
@@ -67,10 +74,12 @@ def get_most_popular_authors_all_time():
 
     return get_query_result_set(query)
 
-# Method for collecting the days where more
-#   than 1% of the requests resulted in errors
-# Returns the query results
+
 def get_days_high_error_requests():
+    # This method is for collecting the days where more
+    #   than 1% of the requests resulted in errors
+    # Returns the query results
+
     query = (
         "select "
         "  to_char(total.time::date, 'Month DD, YYYY') as day, "
@@ -92,7 +101,7 @@ def get_days_high_error_requests():
         "having "
         "  err.status / total.status::float * 100 > 1.0;"
     )
-    
+
     return get_query_result_set(query)
 
 
