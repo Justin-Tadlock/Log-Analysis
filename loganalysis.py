@@ -2,6 +2,7 @@
 # Log Analysis Project.
 
 import psycopg2
+import sys
 
 # Query the database using the query string passed in.
 # Returns the query result set if the query is successful,
@@ -11,9 +12,11 @@ def get_query_result_set(query):
 
     try:
         dbConn = psycopg2.connect('dbname=news')
-    except Exception as e:
-        dbConn = None;
+    except psycopg2.Error as e:
         print('Error -- Could not connect to the database')
+        print(e.pgerror)
+        print(e.diag.message_detail)
+        sys.exit(1)
 
     if dbConn is not None:
         cursor = dbConn.cursor()
